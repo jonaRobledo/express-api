@@ -23,7 +23,7 @@ Content-Type: application/json
     ]
 }
 
-### Prueba de validación de Datos
+### Prueba de Validación de Datos
 POST http://localhost:3000/movies
 Content-Type: application/json
 
@@ -31,3 +31,14 @@ Content-Type: application/json
     "title": 1,
     "year": "aksjhdl"
 }
+
+### Actualizar una Película por ID
+PATCH http://localhost:3000/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+Content-Type: application/json
+
+{
+    "year": 1994
+}
+
+### Eliminar una Película por ID
+DELETE http://localhost:3000/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
