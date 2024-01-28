@@ -34,8 +34,10 @@ app.use(
 			// Verificar si el Origen de la Petición es válido
 			if (ACCEPTED_ORIGINS.includes(origin)) return callback(null, true)
 
-			// if (!origin) return callback(null, true)
+			// Verificar si el Origen de la Petición es el Propio
+			if (!origin) return callback(null, true)
 
+			// Si no se Verifica el Origen de la Petición se devuelve un ERROR
 			return callback(new Error('Not allowed by CORS'))
 		}
 	})
@@ -85,6 +87,21 @@ app.post('/movies', (req, res) => {
 	res.status(201).json(movies)
 })
 
+// DELETE Movies Routes
+app.delete('/movies/:id', (req, res) => {
+	const { id } = req.params
+	const movieIndex = movies.findIndex((movie) => movie.id === id)
+
+	if (movieIndex === -1) {
+		console.log(movies[movieIndex])
+		return res.status(404).json({ message: 'Movie not Found' })
+	}
+
+	movies.splice(movieIndex, 1)
+
+	return res.json({ message: 'Movie Deleted.' })
+})
+
 // PATCH Movies Routes
 app.patch('/movies/:id', (req, res) => {
 	// 1ero Validamos que la Película exista en la Base de Datos
@@ -105,21 +122,6 @@ app.patch('/movies/:id', (req, res) => {
 	}
 	movies[movieIndex] = updateMovie
 	res.json(updateMovie)
-})
-
-// DELETE Movies Routes
-app.delete('movies/:id', (req, res) => {
-	const { id } = req.params
-	const movieIndex = movies.findIndex((movie) => movie.id === id)
-
-	if (movieIndex === -1)
-		return res
-			.status(404)
-			.json({ message: 'Movie not Found', id, movieIndex })
-
-	movies.splice(movieIndex, 1)
-
-	return res.json({ message: 'Movie Deleted.' })
 })
 
 app.listen(PORT, () => {
