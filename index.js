@@ -34,7 +34,7 @@ app.use(
 			// Verificar si el Origen de la Petición es válido
 			if (ACCEPTED_ORIGINS.includes(origin)) return callback(null, true)
 
-			// Verificar si el Origen de la Petición es el Propio
+			// Habilitar CORS para cualquier Origen que realice una Peticion HTTP
 			if (!origin) return callback(null, true)
 
 			// Si no se Verifica el Origen de la Petición se devuelve un ERROR
